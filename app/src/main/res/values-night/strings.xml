@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Currency Converter</string>
     <string name="currency_amount">Currency Amount</string>
     <string name="display_currency_rates">Display Currency Rates</string>
 </resources>
