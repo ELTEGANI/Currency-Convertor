@@ -1,13 +1,15 @@
 package com.coin.currencyconverter.displaycurrency
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.coin.currencyconverter.database.NewRates
 import com.coin.currencyconverter.database.Rates
 import com.coin.currencyconverter.repository.RatesRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val ratesRepository: RatesRepository) : ViewModel() {
 
@@ -15,8 +17,8 @@ class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val rat
     val errorMsg: LiveData<String>
         get() = _errorMsg
 
-    private val _allRates = MutableLiveData<List<Rates>>()
-    val allRates: LiveData<List<Rates>>
+    private val _allRates = MutableLiveData<List<NewRates>>()
+    val allRates: LiveData<List<NewRates>>
         get() = _allRates
 
     var currency:String? =null
@@ -33,8 +35,12 @@ class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val rat
 
     fun getCurrenciesRates(currency:String, amount: String) {
         viewModelScope.launch {
-           val currencyInUsd = amount.toFloat().div(ratesRepository.getUsdValue(currency))
-            _allRates.value = ratesRepository.getListOfRates(currencyInUsd).asLiveData()
+            try {
+                val currencyInUsd = amount.toFloat().div(ratesRepository.getUsdValue(currency))
+                _allRates.value = ratesRepository.getListOfRates(currencyInUsd)
+            }catch (exception:Exception){
+                _errorMsg.value = "No Rates Available For This Currency"
+            }
         }
     }
 
@@ -51,4 +57,5 @@ class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val rat
     fun errorMsgDisplayed(){
         _errorMsg.value = null
     }
+
 }

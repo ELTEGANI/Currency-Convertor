@@ -1,9 +1,8 @@
 package com.coin.currencyconverter.repository
 
-import androidx.lifecycle.LiveData
+import com.coin.currencyconverter.database.NewRates
 import com.coin.currencyconverter.database.Rates
 import com.coin.currencyconverter.database.RatesDao
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -17,9 +16,7 @@ class RatesRepository @Inject constructor(private val ratesDao: RatesDao){
         return ratesDao.insertAllRates(rates)
     }
 
-    fun getListOfRates(currencyInUsd:Float) : Flow<List<Rates>> {
-        return ratesDao.getAllRates(currencyInUsd)
-    }
+    suspend fun getListOfRates(currencyInUsd: Float): List<NewRates> = ratesDao.getAllRates(currencyInUsd)
 
 
 }
