@@ -9,6 +9,7 @@ import com.coin.currencyconverter.database.NewRates
 import com.coin.currencyconverter.database.Rates
 import com.coin.currencyconverter.repository.RatesRepository
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val ratesRepository: RatesRepository) : ViewModel() {
 
@@ -34,11 +35,11 @@ class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val rat
 
     fun getCurrenciesRates(currency:String, amount: String) {
         viewModelScope.launch {
-            if(ratesRepository.getUsdValue(currency).isNaN()){
-                _errorMsg.value = "No Rates Available For This Currency"
-            }else{
+            try {
                 val currencyInUsd = amount.toFloat().div(ratesRepository.getUsdValue(currency))
                 _allRates.value = ratesRepository.getListOfRates(currencyInUsd)
+            }catch (exception:Exception){
+                _errorMsg.value = "No Rates Available For This Currency"
             }
         }
     }
