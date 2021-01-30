@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Rates (
         var currencyName:String,
-        var currencyRates:Float,
+        var quotes:Double,
         @PrimaryKey(autoGenerate = true)
-        var id:Int=0)
+        var id:Int=0,
+        )

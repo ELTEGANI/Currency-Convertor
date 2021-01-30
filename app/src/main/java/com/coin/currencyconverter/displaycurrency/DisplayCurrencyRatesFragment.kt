@@ -14,15 +14,18 @@ import com.coin.currencyconverter.adapter.CurrencyRatesAdapter
 import com.coin.currencyconverter.database.Rates
 import com.coin.currencyconverter.databinding.DisplayCurrencyRatesFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
 class DisplayCurrencyRatesFragment : Fragment() {
 
+    @ExperimentalCoroutinesApi
     private val displayCurrencyRatesViewModel: DisplayCurrencyRatesViewModel by viewModels()
     private lateinit var displayCurrencyRatesFragmentBinding: DisplayCurrencyRatesFragmentBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    @ExperimentalCoroutinesApi
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         displayCurrencyRatesFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.display_currency_rates_fragment, container, false)
 
         displayCurrencyRatesFragmentBinding.lifecycleOwner = this
@@ -47,16 +50,17 @@ class DisplayCurrencyRatesFragment : Fragment() {
         subscribeUi(currencyRatesAdapter)
 
 
-        //TODO remove it after get 30m updates
-//        displayCurrencyRatesViewModel.inserRates(listOf(
-//                Rates("USDAED", 3.673202f),
-//                Rates("USDAFN", 78.230239f),
-//                Rates("USDALL", 102.222938f))
-//        )
+        //TODO remove it after get 30m updates using worker manger
+        displayCurrencyRatesViewModel.inserRates(listOf(
+                Rates("USDAED", 3.673202),
+                Rates("USDAFN", 78.230239),
+                Rates("USDALL", 102.222938))
+        )
 
         return displayCurrencyRatesFragmentBinding.root
 
     }
+    @ExperimentalCoroutinesApi
     private fun subscribeUi(adapter: CurrencyRatesAdapter) {
         displayCurrencyRatesViewModel.allRates.observe(viewLifecycleOwner) { allRates ->
             adapter.submitList(allRates)
