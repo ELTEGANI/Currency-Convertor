@@ -3,8 +3,10 @@ package com.coin.currencyconverter.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.coin.currencyconverter.api.CurrencyConvertorService
 import com.coin.currencyconverter.database.RatesDao
 import com.coin.currencyconverter.database.RatesDataBase
+import com.coin.currencyconverter.repository.RatesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,4 +32,11 @@ object AppModule {
     fun provideRatesDao(ratesDataBase: RatesDataBase): RatesDao {
         return ratesDataBase.RatesDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideCurrencyRatesService(): CurrencyConvertorService {
+        return CurrencyConvertorService.create()
+    }
+
 }
