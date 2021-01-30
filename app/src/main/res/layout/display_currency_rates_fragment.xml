@@ -68,5 +68,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/currency_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:clipToPadding="false"
+            android:padding="5dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/display_tn"
+            app:spanCount="2"
+            tools:itemCount="16"
+            tools:listitem="@layout/currency_view_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
