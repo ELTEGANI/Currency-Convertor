@@ -34,7 +34,7 @@ class DisplayCurrencyRatesViewModel @ViewModelInject constructor(private val rat
     fun getCurrenciesRates(currency:String, amount: String) {
         viewModelScope.launch {
            val currencyInUsd = amount.toFloat().div(ratesRepository.getUsdValue(currency))
-          //  _allRates.value = ratesRepository.getListOfRates(currencyInUsd).asLiveData()
+            _allRates.value = ratesRepository.getListOfRates(currencyInUsd).asLiveData()
         }
     }
 
